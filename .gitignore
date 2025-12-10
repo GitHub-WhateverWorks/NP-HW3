@@ -1,0 +1,16 @@
+
+**/*.o
+
+
+bin/
+**/bin/
+**/*.exe
+
+**:Zone.Identifier
+**:Zone.Identifier:Zone.Identifier
+
+*.zip
+!developer_client/games/bombarena.zip
+
+obj/
+**/obj/
