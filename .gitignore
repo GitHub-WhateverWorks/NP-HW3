@@ -4,7 +4,7 @@
 
 bin/
 **/bin/
-**/*.exe
+
 
 **:Zone.Identifier
 **:Zone.Identifier:Zone.Identifier
