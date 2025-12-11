@@ -1,6 +1,6 @@
 #include "developer_server.hpp"
 #include "../database/db.hpp"
-#include "../../shared/json.hpp"
+#include "../shared/json.hpp"
 #include <thread>
 #include <chrono>
 
