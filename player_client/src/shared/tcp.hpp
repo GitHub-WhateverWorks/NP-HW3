@@ -115,6 +115,9 @@ public:
             std::cerr << "[TCP] recvLine failed\n";
             return false;
         }
+        if (line.empty()) {
+            std::cerr << "[TCP] recvPacket: got empty line, ignoring\n";
+        }
         try {
             p = Packet::deserialize(line);
         } catch (std::exception &e) {
@@ -205,7 +208,12 @@ public:
         if (m_acceptThread.joinable())
             m_acceptThread.join();
     }
+    bool sendRawPacket(int fd, const Packet &p) {
+        std::string line = p.serialize();
 
+        ssize_t n = ::send(fd, line.c_str(), line.size(), 0);
+        return (n == (ssize_t)line.size());
+    }
 private:
     int m_sock;
     std::atomic<bool> m_running;

@@ -291,7 +291,7 @@ private:
 
     void handlePacket(const Packet &p) {
         const auto &d = p.data;
-
+        //std::cout<<d.value("kind",":)")<<"\n";
         // First, detect login/register success response
         if (d.contains("player_id") && d.value("ok", true)) {
             handlePlayerLogin(d);
@@ -337,6 +337,7 @@ private:
         } else if (d.contains("filedata_base64")) {
             handleGameDownload(d);
         } else if (d.contains("server_port") && d.contains("game_id")) {
+            std::cout<<"startinggamereponse\n";
             handleStartGameResponse(d);
         } else if (d.contains("room_id")) {
             handleRoomInfo(d);
@@ -487,7 +488,6 @@ private:
     void handleStartGameResponse(const nlohmann::json &d) {
         int gameId = d.value("game_id", -1);
         int port   = d.value("server_port", 0);
-        int myPlayerId = d.value("player_id", 0);
         std::string is_host = d.value("is_host","0");
         std::cout<<"starting game on port: "<<port<<"\n";
         if (gameId < 0 || port <= 0) {
@@ -524,7 +524,7 @@ private:
 
         //executable permissions
         ::chmod(exeAbs.c_str(), 0755);
-
+        /*
         std::string cmd =
             "/bin/bash -lc \"" + exeAbs + " " + m_host + " " +
             std::to_string(port) + " " +
@@ -538,7 +538,19 @@ private:
         std::cout << "start game command\n";
         std::system(cmd.c_str());
         std::cout << "start game command complete\n";
+        */
+        pid_t pid = fork();
+        if (pid == 0) {
+            
+            execl(exeAbs.c_str(),
+                exeAbs.c_str(),
+                m_host.c_str(),
+                std::to_string(port).c_str(),
+                is_host.c_str(),
+                (char*)NULL);
 
+            _exit(1);
+        }
         m_pendingLaunchMode = ClientLaunchMode::None;
     
     }
@@ -662,9 +674,9 @@ private:
         Packet p;
         p.type = PacketType::PLAYER_START_GAME;
         // server expects integer room_id
-        std::cout<<"sendStartGame stoi\n";
+        //std::cout<<"sendStartGame stoi\n";
         p.data["room_id"]   = std::stoi(m_room->roomId);
-        std::cout<<"sendStartGame stoi fin\n";
+        //std::cout<<"sendStartGame stoi fin\n";
         p.data["player_id"] = m_playerId;
 
         m_conn.sendPacket(p);
@@ -964,10 +976,13 @@ private:
         m_window.clear(sf::Color(30, 30, 30));
 
         if (m_view == View::Login) {
+            //std::cout<<"drawLoginView\n";
             drawLoginView();
         } else if (m_view == View::Store) {
+            //std::cout<<"drawStoreView\n";
             drawStoreView();
         } else if (m_view == View::Room) {
+            //std::cout<<"drawRoomView\n";
             drawRoomView();
         }
         if (m_reviewBoxOpen)

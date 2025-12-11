@@ -170,8 +170,6 @@ void BombArenaServer::clientThread(std::shared_ptr<TCPConnection> conn, int play
 void BombArenaServer::startGameIfPossible(int requesterId) {
     if (m_gameStarted) return;
 
-    // Only host (player 1)
-    if (requesterId != 1) return;
 
     int count = activePlayerCount();
     if (count < 2) {

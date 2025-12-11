@@ -25,7 +25,7 @@ private:
     bool sentStartRequest = false;
 
 public:
-    BombArenaClientGUI(const std::string& ip, int port, int playerId, int is_host)
+    BombArenaClientGUI(const std::string& ip, int port, int is_host)
         : window(sf::VideoMode(600, 600), "BombArena GUI")
     {
         if (!conn.connectToServer(ip, port)) {
@@ -34,6 +34,7 @@ public:
         }
 
         std::cout << "[GUI] Connected. Waiting for JOIN_GAME...\n";
+        std::cout << "isHost: " << is_host <<"\n";
         isHost = is_host;
         state = initTwoPlayerDefault();
         state.players.clear();
@@ -74,7 +75,6 @@ private:
 
                 case PacketType::GAME_END:
                     showGameEnd(p.data);
-                    running = false;
                     break;
 
                 default:
@@ -147,13 +147,20 @@ private:
                 }
             }
 
-            if (!gameStarted)
+            if (!gameStarted){
                 continue;
+            }
 
 
             if (!window.hasFocus())
                 continue;
 
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape) {
+                std::cout<<"Escape!\n";
+                window.close();
+                running = false;
+                return;
+            }
             if (e.type == sf::Event::KeyPressed) {
 
                 Packet p;
@@ -169,6 +176,8 @@ private:
 
                 conn.sendPacket(p);
             }
+
+
         }
     }
 
@@ -293,14 +302,13 @@ private:
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-        std::cout << "Usage: bombarena_client_gui <ip> <port>\n";
+        std::cout << "Usage: bombarena_client_gui <ip> <port> <is_host>\n";
         return 1;
     }
     std::cout<<"receiving start\n";
-    int playerId = std::stoi(argv[3]);
-    int is_host = std::stoi(argv[4]);
-    BombArenaClientGUI gui(argv[1], std::stoi(argv[2]), playerId, is_host);
-    std::cout<<"receiving start fin\n";
+    int is_host = std::stoi(argv[3]);
+    BombArenaClientGUI gui(argv[1], std::stoi(argv[2]), is_host);
+    std::cout<<"start bombarenaclient with args:"<< argv[1]<<" "<<argv[2]<<" "<<argv[3]<<"\n";
     gui.start();
     return 0;
 }

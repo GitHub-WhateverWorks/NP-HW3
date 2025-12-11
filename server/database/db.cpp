@@ -42,7 +42,7 @@ bool Database::load(const std::string &filename) {
     std::streampos size = in.tellg();
     in.seekg(0, std::ios::beg);
 
-    std::cout << "[DB] Existing file size: " << size << " bytes\n";
+    //std::cout << "[DB] Existing file size: " << size << " bytes\n";
 
     if (size == 0) {
         std::cout << "[DB] File empty — reinitializing\n";
@@ -54,7 +54,7 @@ bool Database::load(const std::string &filename) {
 
     try {
         in >> m_root;
-        std::cout << "[DB] Parsed JSON OK\n";
+        //std::cout << "[DB] Parsed JSON OK\n";
     } catch (const std::exception &e) {
         std::cout << "[DB] Parse failed: " << e.what() << "\n";
         m_root = json::object();
@@ -64,9 +64,10 @@ bool Database::load(const std::string &filename) {
     }
 
     initIfEmpty();
+    /*
     std::cout << "[DB] After initIfEmpty(), DB state:\n"
               << m_root.dump(4) << "\n";
-
+    */
     return true;
 }
 
@@ -111,7 +112,7 @@ bool Database::save() {
 
 
 void Database::initIfEmpty() {
-    std::cout<<"[DB] initIfEmpty\n";
+    //std::cout<<"[DB] initIfEmpty\n";
     if (!m_root.is_object()) {
         m_root = json::object();
     }
@@ -127,7 +128,7 @@ void Database::initIfEmpty() {
 }
 
 void Database::ensureCounters() {
-    std::cout<<"[DB] ensureCounters\n";
+    //std::cout<<"[DB] ensureCounters\n";
     if (!m_root.contains("counters") || !m_root["counters"].is_object()) {
         m_root["counters"] = json::object();
     }

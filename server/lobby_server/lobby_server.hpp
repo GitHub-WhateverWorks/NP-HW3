@@ -58,6 +58,7 @@ public:
     // rooms
     std::unordered_map<int, Room> m_rooms;
     int allocateGamePort();
+    bool sendByFd(int fd, const Packet &p);
 private:
     int m_port;
     TCPServer m_server;

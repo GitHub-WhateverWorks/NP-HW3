@@ -21,14 +21,14 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
 
     auto *server = reinterpret_cast<LobbyServer*>(conn.owner);
     Room *room = server->getRoom(roomId);
-
+    std::cout<<"check room\n";
     if (!room) {
         r.data["ok"] = false;
         r.data["msg"] = "Room not found.";
         conn.sendPacket(r);
         return;
     }
-
+    std::cout<<"check host\n";
     // Host only
     if (room->hostPlayerId != playerId) {
         r.data["ok"] = false;
@@ -36,7 +36,7 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
         conn.sendPacket(r);
         return;
     }
-
+    std::cout<<"check player count\n";
     // At least 2 players
     if (room->players.size() < 2) {
         r.data["ok"] = false;
@@ -45,17 +45,13 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
         return;
     }
 
-    // ----------------------------------------
-    // Locate correct uploaded game directory
-    // ----------------------------------------
+
     std::string base = Database::instance().getLatestVersionStoragePath(room->gameId);
     if (base.back() != '/') base += '/';
 
     std::string serverDir = base + "server/";
 
-    // ----------------------------------------
-    // Find the only binary inside server/
-    // ----------------------------------------
+
     std::string serverExe;
     namespace fs = std::filesystem;
     std::cout<<"serverDir: "<<serverDir<<"\n";
@@ -78,16 +74,11 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
         conn.sendPacket(r);
         return;
     }
-
-    // ----------------------------------------
-    // Launch game server
-    // ----------------------------------------
     int port = server->allocateGamePort();
-    //int port = 16000;
+    //int port = 20000;
 
     pid_t pid = fork();
     if (pid == 0) {
-        // Child: launch game server with correct arguments
         std::cout<<"handle_start_game fork\n";
         execl(serverExe.c_str(),
             serverExe.c_str(),
@@ -95,7 +86,6 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
             std::to_string(port).c_str(),
             (char*)NULL);
         std::cout<<"handle_start_game fork finished exe\n";
-        // If exec fails:
         std::cerr << "[Lobby] exec() failed for " << serverExe << "\n";
         _exit(1);
     }
@@ -106,9 +96,6 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
     std::cout << "[Lobby] Game server PID=" << pid
               << " on port " << port << "\n";
 
-    // ----------------------------------------
-    // Broadcast to ALL players so all launch
-    // ----------------------------------------
     std::cout<<"broadcasting\n";
     Packet b;
     b.type = PacketType::SERVER_RESPONSE;
@@ -119,14 +106,12 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
     b.data["server_port"] = port;
     for (int pidPlayer : room->players) {
         std::cout<<"broadcasting for player: "<<pidPlayer<<"\n";
+        Packet b2 = b;
+        b2.data["is_host"] = (pidPlayer == room->hostPlayerId)? "1":"0";
+        if (pidPlayer == room->hostPlayerId) std::cout<< "Found Host!\n";
         int fd = server->m_playerToFd[pidPlayer];
         if (fd <= 0) continue;
-        Packet b2 = b;
-        b2.data["player_id"] = pidPlayer;
-        b2.data["is_host"] = (pidPlayer == room->hostPlayerId)? "1":"0";
-        TCPConnection c(fd);
-        c.owner = server;
-        c.sendPacket(b);
+        server->sendByFd(fd, b2);
     }
     std::cout<<"broadcasting finished\n";
 }

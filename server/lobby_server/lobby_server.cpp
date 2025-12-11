@@ -194,3 +194,6 @@ int LobbyServer::allocateGamePort() {
 
     return nextPort++;
 }
+bool LobbyServer::sendByFd(int fd, const Packet &p) {
+    return m_server.sendRawPacket(fd, p);
+}
