@@ -125,8 +125,9 @@ public:
           m_port(port),
           m_window(sf::VideoMode(900, 700), "Game Store & Lobby") {
 
-        if (!m_font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")) {
-            std::cerr << "[GUI] Could not load font. Adjust path if needed.\n";
+        if (!m_font.loadFromFile("assets/FreeSans.ttf")) {
+            std::cerr << "[GUI] Fatal: could not load font.\n";
+            exit(1);
         }
 
         if (!m_conn.connectToServer(host, port)) {
