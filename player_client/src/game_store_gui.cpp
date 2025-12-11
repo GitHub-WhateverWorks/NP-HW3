@@ -487,6 +487,8 @@ private:
     void handleStartGameResponse(const nlohmann::json &d) {
         int gameId = d.value("game_id", -1);
         int port   = d.value("server_port", 0);
+        int myPlayerId = d.value("player_id", 0);
+        std::string is_host = d.value("is_host","0");
         std::cout<<"starting game on port: "<<port<<"\n";
         if (gameId < 0 || port <= 0) {
             m_statusMessage = "Invalid start-game response.";
@@ -525,7 +527,9 @@ private:
 
         std::string cmd =
             "/bin/bash -lc \"" + exeAbs + " " + m_host + " " +
-            std::to_string(port) + " & disown\"";
+            std::to_string(port) + " " +
+            std::to_string(myPlayerId) +" " +
+            is_host +" & disown\"";
 
         std::cout << "[GUI] Launching: " << cmd << "\n";
 

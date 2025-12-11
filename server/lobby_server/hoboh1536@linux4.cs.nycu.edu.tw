@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     std::cout << "[LobbyServer] Running on port " << port << "\n";
 
     while (true) {
-        Database::instance().load("tables.json");
+        Database::instance().load("tables.json")
         sleep(1);
     }
 

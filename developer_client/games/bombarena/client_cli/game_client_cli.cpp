@@ -5,8 +5,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "../../../shared/tcp.hpp"
-#include "../../../shared/packet.hpp"
+#include "../shared/tcp.hpp"
+#include "../shared/packet.hpp"
 #include "../engine/engine.hpp"
 
 using namespace bombarena;

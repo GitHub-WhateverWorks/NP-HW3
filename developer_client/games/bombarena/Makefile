@@ -2,7 +2,7 @@
 #sudo apt install unzip
 CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -pthread
-INCLUDES := -Iengine -Iserver -Iclient_cli -Iclient_gui -I../.. -I../../shared
+INCLUDES := -Iengine -Iserver -Iclient_cli -Iclient_gui -I -Ishared
 LDFLAGS  := -pthread
 
 # ---- SFML (GUI client optional) ----

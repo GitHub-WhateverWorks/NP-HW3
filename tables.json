@@ -1,0 +1,52 @@
+{
+    "counters": {
+        "developer_id": 2,
+        "game_id": 2,
+        "player_id": 3,
+        "review_id": 1,
+        "room_id": 1,
+        "version_id": 2
+    },
+    "developers": [
+        {
+            "id": 1,
+            "password_hash": "10089081994332581363",
+            "username": "123"
+        }
+    ],
+    "games": [
+        {
+            "author_dev_id": 1,
+            "description": "123",
+            "game_type": "123",
+            "id": 1,
+            "is_active": true,
+            "latest_version_id": 1,
+            "max_players": 123,
+            "name": "123"
+        }
+    ],
+    "players": [
+        {
+            "id": 1,
+            "password_hash": "10089081994332581363",
+            "username": "123"
+        },
+        {
+            "id": 2,
+            "password_hash": "6063860236199242894",
+            "username": "qwe"
+        }
+    ],
+    "reviews": [],
+    "rooms": [],
+    "versions": [
+        {
+            "created_at": "1765426582",
+            "game_id": 1,
+            "id": 1,
+            "storage_path": "uploaded_games/game_1/123/",
+            "version_str": "123"
+        }
+    ]
+}

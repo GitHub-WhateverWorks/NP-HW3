@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../shared/tcp.hpp"
-#include "../../../shared/packet.hpp"
+#include "../shared/tcp.hpp"
+#include "../shared/packet.hpp"
 #include "../engine/engine.hpp"
 
 #include <vector>

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "../../../shared/tcp.hpp"
-#include "../../../shared/packet.hpp"
+#include "../shared/tcp.hpp"
+#include "../shared/packet.hpp"
 #include "../engine/engine.hpp"
 
 #include <thread>
@@ -25,7 +25,7 @@ private:
     bool sentStartRequest = false;
 
 public:
-    BombArenaClientGUI(const std::string& ip, int port)
+    BombArenaClientGUI(const std::string& ip, int port, int playerId, int is_host)
         : window(sf::VideoMode(600, 600), "BombArena GUI")
     {
         if (!conn.connectToServer(ip, port)) {
@@ -34,7 +34,7 @@ public:
         }
 
         std::cout << "[GUI] Connected. Waiting for JOIN_GAME...\n";
-
+        isHost = is_host;
         state = initTwoPlayerDefault();
         state.players.clear();
         state.bombs.clear();
@@ -61,7 +61,6 @@ private:
                 case PacketType::JOIN_GAME:
                     playerId = p.data["player_id"];
                     std::cout << "[GUI] You are player " << playerId << "\n";
-                    if (playerId == 1) isHost = true;
                     break;
 
                 case PacketType::PLAYER_START_GAME:
@@ -298,7 +297,9 @@ int main(int argc, char** argv) {
         return 1;
     }
     std::cout<<"receiving start\n";
-    BombArenaClientGUI gui(argv[1], std::stoi(argv[2]));
+    int playerId = std::stoi(argv[3]);
+    int is_host = std::stoi(argv[4]);
+    BombArenaClientGUI gui(argv[1], std::stoi(argv[2]), playerId, is_host);
     std::cout<<"receiving start fin\n";
     gui.start();
     return 0;

@@ -117,12 +117,13 @@ void handleStartGame(TCPConnection &conn, const nlohmann::json &d) {
     b.data["game_id"] = room->gameId;
     b.data["room_id"] = room->roomId;
     b.data["server_port"] = port;
-    
     for (int pidPlayer : room->players) {
         std::cout<<"broadcasting for player: "<<pidPlayer<<"\n";
         int fd = server->m_playerToFd[pidPlayer];
         if (fd <= 0) continue;
-
+        Packet b2 = b;
+        b2.data["player_id"] = pidPlayer;
+        b2.data["is_host"] = (pidPlayer == room->hostPlayerId)? "1":"0";
         TCPConnection c(fd);
         c.owner = server;
         c.sendPacket(b);
