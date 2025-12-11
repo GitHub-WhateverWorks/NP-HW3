@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=BombArena Client
+Exec=BombArenaClient
+Icon=BombArenaClient
+Categories=Game;
+Terminal=false

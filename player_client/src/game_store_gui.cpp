@@ -464,8 +464,7 @@ private:
         }
 
         markExecutablesInDir(installDir + "/server");
-        markExecutablesInDir(installDir + "/client_cli");
-        markExecutablesInDir(installDir + "/client_gui");
+        markExecutablesInDir(installDir + "/client");
         std::string vpath = installDir + "/version.txt";
         std::ofstream vf(vpath);
         vf << version;
@@ -515,7 +514,7 @@ private:
 
         std::string exeRel;
         if (m_pendingLaunchMode == ClientLaunchMode::GUI) {
-            exeRel = g->installDir + "/client/game_client_gui";
+            exeRel = g->installDir + "/client/game_client_gui.AppImage";
         } else {
             exeRel = g->installDir + "/client/game_client_cli";
         }

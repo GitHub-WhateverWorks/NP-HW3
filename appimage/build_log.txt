@@ -1,0 +1,2 @@
+WARNING: appstreamcli command is missing, please install it if you want to use AppStream metadata
+/home/charlieof604/Network_hw03_test/NP-HW3/appimage/GameStore.AppDir should be packaged as ../GameStore-x86_64.AppImage

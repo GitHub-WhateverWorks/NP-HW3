@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Game Store GUI
+Exec=GameStore
+Icon=GameStore
+Categories=Game;
+Terminal=false
