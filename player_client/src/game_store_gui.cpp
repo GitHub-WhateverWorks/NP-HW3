@@ -514,9 +514,9 @@ private:
 
         std::string exeRel;
         if (m_pendingLaunchMode == ClientLaunchMode::GUI) {
-            exeRel = g->installDir + "/client/game_client_gui.AppImage";
+            exeRel = g->installDir + "/client/run_gui.sh";
         } else {
-            exeRel = g->installDir + "/client/game_client_cli";
+            exeRel = g->installDir + "/client/run_cli.sh";
         }
 
         std::string exeAbs = std::filesystem::absolute(exeRel).string();

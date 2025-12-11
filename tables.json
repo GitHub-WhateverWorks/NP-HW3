@@ -5,7 +5,7 @@
         "player_id": 3,
         "review_id": 1,
         "room_id": 1,
-        "version_id": 4
+        "version_id": 5
     },
     "developers": [
         {
@@ -36,7 +36,7 @@
             "game_type": "1234",
             "id": 2,
             "is_active": true,
-            "latest_version_id": 3,
+            "latest_version_id": 4,
             "max_players": 1234,
             "name": "1234"
         }
@@ -76,6 +76,13 @@
             "id": 3,
             "storage_path": "uploaded_games/game_2/2.0/",
             "version_str": "2.0"
+        },
+        {
+            "created_at": "1765461108",
+            "game_id": 2,
+            "id": 4,
+            "storage_path": "uploaded_games/game_2/3.0/",
+            "version_str": "3.0"
         }
     ]
 }
