@@ -1,0 +1,11 @@
+src/SFML/Audio/CMakeFiles/sfml-audio.dir/SoundSource.cpp.o: \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/src/SFML/Audio/SoundSource.cpp \
+ /usr/include/stdc-predef.h \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/Audio/SoundSource.hpp \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/Audio/Export.hpp \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/Config.hpp \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/Audio/AlResource.hpp \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/System/Vector3.hpp \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/include/SFML/System/Vector3.inl \
+ /home/charlieof604/Network_hw03_test/NP-HW3/SFML/src/SFML/Audio/ALCheck.hpp \
+ /usr/include/AL/al.h /usr/include/AL/alc.h

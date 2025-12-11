@@ -3,26 +3,62 @@
 # ================================
 
 CXX      := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -O2
-
-SFML_LIBS := -lsfml-graphics -lsfml-window -lsfml-system
-
-# ✅ shared + local src only
-INCLUDES := -I./shared -I./src
-LDFLAGS  := $(SFML_LIBS)
+CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -DSFML_STATIC
 
 SRC_DIR  := src
+INCLUDES := -I./shared -I./src
 
-# ✅ base64.cpp now local
+TARGET   := game_store_gui
+
 SOURCES  := \
     $(SRC_DIR)/game_store_gui.cpp \
     $(SRC_DIR)/base64.cpp
 
 OBJECTS  := $(SOURCES:.cpp=.o)
 
-TARGET   := game_store_gui
+# ================================
+# Static SFML (2.5.1) + Dynamic SysLibs
+# ================================
 
-.PHONY: all clean
+SFML_STATIC_LIBS := \
+        -Wl,-Bstatic \
+            -lsfml-graphics-s \
+            -lsfml-window-s \
+            -lsfml-system-s \
+            -lsfml-audio-s \
+            -lsfml-network-s \
+            -lfreetype \
+            -ljpeg \
+        -Wl,-Bdynamic \
+            -lpng \
+            -lz \
+            -lbrotlidec \
+            -lbrotlicommon \
+            -lharfbuzz \
+            -lopenal \
+            -lvorbisenc \
+            -lvorbisfile \
+            -lvorbis \
+            -logg \
+            -lFLAC \
+            -lX11 \
+            -lXrandr \
+            -lXcursor \
+            -lXi \
+            -lXext \
+            -lXinerama \
+            -lXrender \
+            -lXfixes \
+            -lGL \
+            -lGLU \
+            -ludev \
+            -pthread
+
+LDFLAGS := $(SFML_STATIC_LIBS)
+
+# ================================
+# Build Rules
+# ================================
 
 all: $(TARGET)
 
