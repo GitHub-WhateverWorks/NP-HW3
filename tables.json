@@ -1,0 +1,88 @@
+{
+    "counters": {
+        "developer_id": 3,
+        "game_id": 3,
+        "player_id": 3,
+        "review_id": 1,
+        "room_id": 1,
+        "version_id": 5
+    },
+    "developers": [
+        {
+            "id": 1,
+            "password_hash": "10089081994332581363",
+            "username": "123"
+        },
+        {
+            "id": 2,
+            "password_hash": "8141937955048696534",
+            "username": "admin"
+        }
+    ],
+    "games": [
+        {
+            "author_dev_id": 1,
+            "description": "123",
+            "game_type": "123",
+            "id": 1,
+            "is_active": true,
+            "latest_version_id": 1,
+            "max_players": 123,
+            "name": "123"
+        },
+        {
+            "author_dev_id": 2,
+            "description": "1234",
+            "game_type": "1234",
+            "id": 2,
+            "is_active": true,
+            "latest_version_id": 4,
+            "max_players": 1234,
+            "name": "1234"
+        }
+    ],
+    "players": [
+        {
+            "id": 1,
+            "password_hash": "10089081994332581363",
+            "username": "123"
+        },
+        {
+            "id": 2,
+            "password_hash": "6063860236199242894",
+            "username": "qwe"
+        }
+    ],
+    "reviews": [],
+    "rooms": [],
+    "versions": [
+        {
+            "created_at": "1765426582",
+            "game_id": 1,
+            "id": 1,
+            "storage_path": "uploaded_games/game_1/123/",
+            "version_str": "123"
+        },
+        {
+            "created_at": "1765453796",
+            "game_id": 2,
+            "id": 2,
+            "storage_path": "uploaded_games/game_2/1.0.0/",
+            "version_str": "1.0.0"
+        },
+        {
+            "created_at": "1765459251",
+            "game_id": 2,
+            "id": 3,
+            "storage_path": "uploaded_games/game_2/2.0/",
+            "version_str": "2.0"
+        },
+        {
+            "created_at": "1765461108",
+            "game_id": 2,
+            "id": 4,
+            "storage_path": "uploaded_games/game_2/3.0/",
+            "version_str": "3.0"
+        }
+    ]
+}
