@@ -109,6 +109,12 @@ private:
             Packet p;
             if (!m_conn.recvPacket(p)) {
                 // Hard disconnect
+                if (m_view == DevView::Login) {
+                    // Allow retry after register failure
+                    m_statusText = "Disconnected. Please try again.";
+                    m_alive = false;
+                    return;
+                }
                 m_statusText = "Lost connection to server!";
                 m_running = false;
                 m_alive = false;
@@ -139,7 +145,9 @@ private:
         std::string kind = d.value("kind", "");
 
         if (!ok) {
-            m_statusText = "Server error: " + d.value("msg", std::string("unknown"));
+            std::string msg = d.value("msg", std::string("unknown"));
+
+            m_statusText = "Server error: " + msg;
             return;
         }
 
