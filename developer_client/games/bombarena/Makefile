@@ -20,13 +20,13 @@ INCLUDES := -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared
 USER_SFML_PREFIX := $(HOME)/local/sfml/usr
 
 ifeq ($(shell test -d $(USER_SFML_PREFIX)/include/SFML && echo yes),yes)
-    # No user-space SFML → use system
-    SFML_INC := /usr/include
-    SFML_LIB := /usr/lib/x86_64-linux-gnu
-else
-    # User-space SFML present
+    # User-space SFML present (no sudo)
     SFML_INC := $(USER_SFML_PREFIX)/include
     SFML_LIB := $(USER_SFML_PREFIX)/lib/x86_64-linux-gnu
+else
+    # Fallback to system SFML
+    SFML_INC := /usr/include
+    SFML_LIB := /usr/lib/x86_64-linux-gnu
 endif
 
 INCLUDES += -I$(SFML_INC)

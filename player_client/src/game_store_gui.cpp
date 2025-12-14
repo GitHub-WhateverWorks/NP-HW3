@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#if SFML_VERSION_MAJOR != 2
+#error "This project requires SFML 2.x"
+#endif
 #include <sys/select.h>
 #include <unistd.h>
 
