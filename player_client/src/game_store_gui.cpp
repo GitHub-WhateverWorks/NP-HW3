@@ -118,6 +118,15 @@ static std::string readVersionFile(const std::string &installDir) {
     std::getline(f, ver);
     return ver;
 }
+
+static std::string getExeDir() {
+    char buf[4096];
+    ssize_t len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+    if (len <= 0) return ".";
+    buf[len] = '\0';
+    return std::filesystem::path(buf).parent_path().string();
+}
+
 class GameStoreApp {
 public:
     GameStoreApp(const std::string &host, int port)
@@ -125,10 +134,12 @@ public:
           m_port(port),
           m_window(sf::VideoMode(900, 700), "Game Store & Lobby") {
 
-        if (!m_font.loadFromFile("assets/FreeSans.ttf")) {
-            std::cerr << "[GUI] Fatal: could not load font.\n";
+        std::string fontPath = getExeDir() + "/assets/DejaVuSans.ttf";
+        if (!m_font.loadFromFile(fontPath)) {
+            std::cerr << "[GUI] Fatal: could not load font: " << fontPath << "\n";
             exit(1);
         }
+
 
         if (!m_conn.connectToServer(host, port)) {
             std::cerr << "[GUI] Could not connect to main store server at "
@@ -527,9 +538,9 @@ private:
 
         std::string exeRel;
         if (m_pendingLaunchMode == ClientLaunchMode::GUI) {
-            exeRel = g->installDir + "/bin/game_client_cli";
-        } else {
             exeRel = g->installDir + "/bin/game_client_gui";
+        } else {
+            exeRel = g->installDir + "/bin/game_client_cli";
         }
 
         std::string exeAbs = std::filesystem::absolute(exeRel).string();

@@ -1,0 +1,18 @@
+[BUILD] Building game clients
+rm -rf obj bin
+g++ -std=c++17 -Wall -Wextra -pthread -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared -I/home/charlieof604/local/sfml/usr/include -c engine/engine.cpp -o obj/engine/engine.o
+g++ -std=c++17 -Wall -Wextra -pthread -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared -I/home/charlieof604/local/sfml/usr/include -c server/game_server.cpp -o obj/server/game_server.o
+server/game_server.cpp: In member function ‘void BombArenaServer::startGameIfPossible(int)’:
+server/game_server.cpp:170:47: warning: unused parameter ‘requesterId’ [-Wunused-parameter]
+  170 | void BombArenaServer::startGameIfPossible(int requesterId) {
+      |                                           ~~~~^~~~~~~~~~~
+g++ -std=c++17 -Wall -Wextra -pthread -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared -I/home/charlieof604/local/sfml/usr/include -c server/main.cpp -o obj/server/main.o
+g++ -std=c++17 -Wall -Wextra -pthread -o bin/game_server \
+	obj/engine/engine.o obj/server/game_server.o obj/server/main.o -pthread
+g++ -std=c++17 -Wall -Wextra -pthread -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared -I/home/charlieof604/local/sfml/usr/include -c client_cli/game_client_cli.cpp -o obj/client_cli/game_client_cli.o
+g++ -std=c++17 -Wall -Wextra -pthread -o bin/game_client_cli \
+	obj/engine/engine.o obj/client_cli/game_client_cli.o -pthread
+g++ -std=c++17 -Wall -Wextra -pthread -Iengine -Iserver -Iclient_cli -Iclient_gui -Ishared -I/home/charlieof604/local/sfml/usr/include -c client_gui/game_client_sfml.cpp -o obj/client_gui/game_client_sfml.o
+g++ -std=c++17 -Wall -Wextra -pthread -o bin/game_client_gui \
+	obj/engine/engine.o obj/client_gui/game_client_sfml.o -L/home/charlieof604/local/sfml/usr/lib/x86_64-linux-gnu -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio -pthread
+[BUILD] Client build complete
