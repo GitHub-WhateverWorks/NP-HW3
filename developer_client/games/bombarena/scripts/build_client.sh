@@ -6,6 +6,6 @@ echo "[BUILD] Building game clients"
 cd "$(dirname "$0")/.."
 
 make clean
-make game_client_cli game_client_gui
+make 
 
 echo "[BUILD] Client build complete"

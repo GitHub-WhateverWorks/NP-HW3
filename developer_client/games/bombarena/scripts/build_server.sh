@@ -6,6 +6,6 @@ echo "[BUILD] Building game server"
 cd "$(dirname "$0")/.."
 
 make clean
-make game_server
+make 
 
 echo "[BUILD] Server build complete"

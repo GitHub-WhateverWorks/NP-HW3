@@ -142,7 +142,7 @@ void handleUploadGame(TCPConnection &conn, const json &d) {
         "cd \"" + verFolder + "\" && "
         "chmod +x scripts/build_server.sh && "
         "./scripts/build_server.sh > build_server.log 2>&1";
-
+    std::cout<< buildCmd <<"\n";
     int ret = system(buildCmd.c_str());
 
     if (ret != 0) {
