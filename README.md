@@ -32,7 +32,8 @@
 
 - After make is complete, 1 binary file developer_client_gui should be in developer_client/ directory
 
-- Do ./developer_client_gui <ip> <port> in developer_client/ directory to start developer client. For instance, "./developer_client_gui 140.113.17.14 15000"
+- Do LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui <ip> <port> in developer_client/ directory to start developer client. For instance, 
+"LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui 140.113.17.14 15000"
 
 - Within the gui, register if you don't have an account, or login if you do.
 
@@ -50,7 +51,8 @@
 
 - After make is complete, 1 binary file game_store_gui should be in player_client/ directory
 
-- Do ./game_store_gui <ip> <port> in player_client/ directory to start player client. For instance, "./game_store_gui 140.113.17.14 17000"
+- Do LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui <ip> <port> in player_client/ directory to start player client. For instance, 
+"LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui 140.113.17.14 17000"
 
 - Within the gui, register if you don't have an account, or login if you do.
 
