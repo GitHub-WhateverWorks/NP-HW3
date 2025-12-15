@@ -32,8 +32,9 @@
 
 - After make is complete, 1 binary file developer_client_gui should be in developer_client/ directory
 
-- Do LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui <ip> <port> in developer_client/ directory to start developer client. For instance, 
-"LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui 140.113.17.14 15000"
+- Do LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui <ip> <port> in developer_client/ directory to start developer client. For instance: 
+- "LIBGL_ALWAYS_SOFTWARE=1 ./developer_client_gui 140.113.17.14 15000"
+- LIBGL_ALWAYS_SOFTWARE is a fix for wsl, because some wsl2 machine doesn't have openSL hardware pipline available, causing segmentation fault without warning.
 
 - Within the gui, register if you don't have an account, or login if you do.
 
@@ -51,8 +52,9 @@
 
 - After make is complete, 1 binary file game_store_gui should be in player_client/ directory
 
-- Do LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui <ip> <port> in player_client/ directory to start player client. For instance, 
-"LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui 140.113.17.14 17000"
+- Do LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui <ip> <port> in player_client/ directory to start player client. For instance: 
+- "LIBGL_ALWAYS_SOFTWARE=1 ./game_store_gui 140.113.17.14 17000"
+- LIBGL_ALWAYS_SOFTWARE is a fix for wsl, because some wsl2 machine doesn't have openSL hardware pipline available, causing segmentation fault without warning.
 
 - Within the gui, register if you don't have an account, or login if you do.
 
@@ -61,5 +63,6 @@
 - Every game will show your current downloaded version and the newest version, only the newest version can play the game.
 
 - If you have hosting, click create room. If you are joining, ask the host for the ROOM CODE on the TOP LEFT CORNER of the room, and insert the number into the ROOM CODE section to the right of JOIN ROOM button.
+
 
 - Once every player is in room, the host can start the game by pressing Start.
