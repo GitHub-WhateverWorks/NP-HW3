@@ -3,12 +3,12 @@
 # ================================
 
 CXX      := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -DSFML_STATIC
+CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -pthread
 
 SRC_DIR  := src
-INCLUDES := -I./shared -I./src
-
 TARGET   := developer_client_gui
+
+INCLUDES := -I./shared -I./src
 
 SOURCES  := \
     $(SRC_DIR)/developer_client_gui.cpp \
@@ -16,49 +16,33 @@ SOURCES  := \
 
 OBJECTS  := $(SOURCES:.cpp=.o)
 
-# ================================
-# Static SFML (2.5.1) + Dynamic System Libraries
-# ================================
+# ------------------------------------------------------------
+# SFML detection (user-space preferred, fallback to system)
+# ------------------------------------------------------------
 
-SFML_STATIC_LIBS := \
-        -Wl,-Bstatic \
-            -lsfml-graphics-s \
-            -lsfml-window-s \
-            -lsfml-system-s \
-            -lsfml-audio-s \
-            -lsfml-network-s \
-            -lfreetype \
-            -ljpeg \
-        -Wl,-Bdynamic \
-            -lpng \
-            -lz \
-            -lbrotlidec \
-            -lbrotlicommon \
-            -lharfbuzz \
-            -lopenal \
-            -lvorbisenc \
-            -lvorbisfile \
-            -lvorbis \
-            -logg \
-            -lFLAC \
-            -lX11 \
-            -lXrandr \
-            -lXcursor \
-            -lXi \
-            -lXext \
-            -lXinerama \
-            -lXrender \
-            -lXfixes \
-            -lGL \
-            -lGLU \
-            -ludev \
-            -pthread
+USER_SFML_PREFIX := $(HOME)/local/sfml/usr
 
-LDFLAGS := $(SFML_STATIC_LIBS)
+ifeq ($(shell test -d $(USER_SFML_PREFIX)/include/SFML && echo yes),yes)
+    SFML_INC := $(USER_SFML_PREFIX)/include
+    SFML_LIB := $(USER_SFML_PREFIX)/lib/x86_64-linux-gnu
+else
+    SFML_INC := /usr/include
+    SFML_LIB := /usr/lib/x86_64-linux-gnu
+endif
 
-# ================================
+INCLUDES += -I$(SFML_INC)
+
+LDFLAGS := -L$(SFML_LIB) \
+           -lsfml-graphics \
+           -lsfml-window \
+           -lsfml-system \
+           -lsfml-network \
+           -lsfml-audio \
+           -pthread
+
+# ------------------------------------------------------------
 # Build Rules
-# ================================
+# ------------------------------------------------------------
 
 all: $(TARGET)
 
